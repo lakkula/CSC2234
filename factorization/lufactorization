@@ -1,0 +1,31 @@
+function lufactorization(A,b)
+%A=[1 1 -1;1 -2 3;2 3 1]
+%b=[4;-6;7]
+
+if (A(1,1)~=0) %A(1,1)=1
+    n=size(A,1); %n=3
+    U=A; %U=[1 1 -1;1 -2 3;2 3 1]
+    L=eye(n); %eye=identity matrix L=[1 0 0;0 1 0;0 0 1]
+
+    x=zeros(n,1); %X=[0;0;0]
+
+    for k=1:n %(row loop)
+        for i=k+1:n 
+            fact=U(i,k)/U(k,k);
+            L(i,k)=fact;
+            for j=k:n 
+                U(i,j)=U(i,j)-fact*U(k,j);
+                
+            end
+        end
+    end
+    L
+    U
+end
+
+%forward substitution
+[y]=forward(L,b,n)
+
+%backward substitution
+[x]=backward(U,y,n)
+end
